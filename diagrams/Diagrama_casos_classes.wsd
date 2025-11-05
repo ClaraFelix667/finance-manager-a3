@@ -1,2 +1,8 @@
 @startuml
+actor clara 
+actor Daniel
+
+
+
+
 @enduml
