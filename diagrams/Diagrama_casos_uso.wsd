@@ -1,5 +1,5 @@
 @startuml
-top to bottom direction
+left to right direction
 skinparam actorStyle awesome
 actor Usuario as a1
 actor Sistema as a2
@@ -7,7 +7,6 @@ note "Nome completo, CPF, email, tipo de conta..." as N1
 
 /'UCS -> Sistema
   UC -> Usuario'/
-
 package Aplicativo_de_gerenciamento_de_finanças {
     usecase "Cadastrar-se" as UC1
     usecase "Login" as UC2
@@ -37,7 +36,22 @@ package Aplicativo_de_gerenciamento_de_finanças {
 
 a1 - UC1
 a1 - UC2
-UC1 ..> UC5
+a1 - UC4
+a1 - UC5
+a1 - UC6
+a1 - UC11
+a1 - UC12
+a1 - UC13
+a1 - UC14
+a1 - UC15
+a1 - UC16
+a1 - UC17
+a1 - UC18
+a1 - UC19
+a1 - UC20
+
+
+UC1 ..> UC5:<<include>>
 UC5 .. N1
 
 
