@@ -1,3 +1,44 @@
 @startuml
+top to bottom direction
+skinparam actorStyle awesome
+actor Usuario as a1
+actor Sistema as a2
+note "Nome completo, CPF, email, tipo de conta..." as N1
+
+/'UCS -> Sistema
+  UC -> Usuario'/
+
+package Aplicativo_de_gerenciamento_de_finanças {
+    usecase "Cadastrar-se" as UC1
+    usecase "Login" as UC2
+    usecase "Conta corrente" as UC3
+    usecase "Conta poupança" as UC4
+    usecase "Preencher campos obrigatórios" as UC5
+    usecase "Recuperar senha" as UC6
+    usecase "Autenticação" as UCS1
+    usecase "Cadastrar cartão de crédito" as UC7
+    usecase "Informações do cartão" as UC8
+    usecase "Conta corrente" as UC9
+    usecase "Conta poupança" as UC10
+    usecase "Alertas de vencimento" as UCS2
+    usecase "Gerar relatórios gráficos" as UCS3
+    usecase "Enviar mudança de senha para o email cadastrado" as UCS4
+    usecase "Registrar despesas" as UC11
+    usecase "Editar informações" as UC12
+    usecase "Consultas" as UC13
+    usecase "Consultar despesas" as UC14
+    usecase "Consultar receitas" as UC15
+    usecase "Registrar receitas" as UC16
+    usecase "Metas" as UC17
+    usecase "Definir metas mensais" as UC18
+    usecase "Buscar" as UC19
+    usecase "Excluir transação" as UC20
+}
+
+a1 - UC1
+a1 - UC2
+UC1 ..> UC5
+UC5 .. N1
+
 
 @enduml
