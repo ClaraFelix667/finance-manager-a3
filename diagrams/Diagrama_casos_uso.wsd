@@ -7,7 +7,7 @@ note "Nome completo, CPF, email, tipo de conta..." as N1
 
 /'UCS -> Sistema
   UC -> Usuario'/
-package Aplicativo_de_gerenciamento_de_finanças {
+package Aplicativo_de_Finanças {
     usecase "Cadastrar-se" as UC1
     usecase "Login" as UC2
     usecase "Adicionar conta" as UC3
@@ -27,7 +27,6 @@ package Aplicativo_de_gerenciamento_de_finanças {
     usecase "Consultar despesas" as UC14
     usecase "Consultar receitas" as UC15
     usecase "Registrar receitas" as UC16
-    usecase "Metas" as UC17
     usecase "Definir metas mensais" as UC18
     usecase "Buscar" as UC19
     usecase "Excluir transação" as UC20
@@ -59,5 +58,4 @@ UC11 ..> UC12:<<include>>
 UC13 ..>UC14:<<include>>
 UC13 ..>UC15:<<include>>
 UC13 ..>UC16:<<include>>
-UC17 ..>UC18:<<include>>
 @enduml
