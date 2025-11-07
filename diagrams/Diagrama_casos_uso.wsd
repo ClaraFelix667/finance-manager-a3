@@ -10,15 +10,14 @@ note "Nome completo, CPF, email, tipo de conta..." as N1
 package Aplicativo_de_gerenciamento_de_finanças {
     usecase "Cadastrar-se" as UC1
     usecase "Login" as UC2
-    usecase "Conta corrente" as UC3
+    usecase "Adicionar conta" as UC3
     usecase "Conta poupança" as UC4
+    usecase "Conta corrente" as UC9
     usecase "Preencher campos obrigatórios" as UC5
     usecase "Recuperar senha" as UC6
     usecase "Autenticação" as UCS1
     usecase "Cadastrar cartão de crédito" as UC7
     usecase "Informações do cartão" as UC8
-    usecase "Conta corrente" as UC9
-    usecase "Conta poupança" as UC10
     usecase "Alertas de vencimento" as UCS2
     usecase "Gerar relatórios gráficos" as UCS3
     usecase "Enviar mudança de senha para o email cadastrado" as UCS4
@@ -36,23 +35,29 @@ package Aplicativo_de_gerenciamento_de_finanças {
 
 a1 - UC1
 a1 - UC2
-a1 - UC4
-a1 - UC5
+a1 - UC3
 a1 - UC6
+a1 - UC7
 a1 - UC11
-a1 - UC12
 a1 - UC13
-a1 - UC14
-a1 - UC15
 a1 - UC16
-a1 - UC17
 a1 - UC18
 a1 - UC19
 a1 - UC20
 
 
+
+/'Interacoes'/
 UC1 ..> UC5:<<include>>
+UC2 ..> UCS1:<<include>>
+UC3 ..> UC4:<<include>>
+UC3 ..> UC9:<<include>>
+UC7 ..> UC8:<<include>>
 UC5 .. N1
-
-
+UC6 ..> UCS4: <<include>>
+UC11 ..> UC12:<<include>>
+UC13 ..>UC14:<<include>>
+UC13 ..>UC15:<<include>>
+UC13 ..>UC16:<<include>>
+UC17 ..>UC18:<<include>>
 @enduml
