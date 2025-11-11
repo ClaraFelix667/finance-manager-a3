@@ -1,4 +1,4 @@
-# Aplicativo de gerenciamento de finanças pessoais - Projeto 3
+# Aplicativo de gerenciamento de finanças pessoais - Projeto A3
 
 **UC:** Modelagem de Software
 
