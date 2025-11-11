@@ -1,6 +1,111 @@
 @startuml
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
 
+actor Usuario [
+    **Usuário**
+    (Ator)
+]
 
+actor Admin [
+    **Admin**
+    (Ator)
+]
 
+package "Aplicativo de Finanças" {
 
+    ' --- Enumerações (Tipos de dados) ---
+    enum TipoTransacao {
+        RECEITA
+        DESPESA
+    }
+
+    enum TipoRelatorio {
+        MENSAL
+        ANUAL
+    }
+
+    ' --- Classes Principais ---
+    class Usuario {
+        - ID: int
+        - Nome: string
+        - Email: string
+        - SenhaHash: string
+        + AdicionarConta()
+        + RegistrarTransacao()
+        + CriarOrcamento()
+        + GerarRelatorio()
+    }
+
+    class Conta {
+        - ID: int
+        - NomeInstituicao: string
+        - Tipo: string ' Ex: Corrente, Poupança, Cartão
+        - SaldoAtual: double
+    }
+
+    class Transacao {
+        - ID: int
+        - Valor: double
+        - Categoria: string
+        - Data: date
+        - Recorrente: boolean
+    }
+
+    class Orcamento {
+        - ID: int
+        - Mes: date
+        - Categoria: string
+        - Limite: double
+        - GastoAtual: double
+        + VerificarAlertaLimite(): boolean
+    }
+
+    class Relatorio {
+        - ID: int
+        - Dados: JSON 
+        + GerarGrafico()
+    }
+
+    class Integracao {
+        - ID: int
+        - API_Token: string
+        - Banco: string
+        - UltimaSincronizacao: timestamp
+    }
+}
+
+' --- Relacionamentos ---
+
+' Herança (Admin é um tipo de Usuário)
+Admin --|> Usuario
+
+' Associações (Composição e Agregação)
+' "Contas_Bancarias (array)" [cite: 119] -> Composição
+Usuario "1" *-- "N" Conta : "Possui"
+
+' "Transacoes N:1 com Usuarios"  -> Composição
+Usuario "1" *-- "N" Transacao : "Registra"
+
+' "Orcamentos N:1 com Usuarios"  -> Composição
+Usuario "1" *-- "N" Orcamento : "Define"
+
+' "Relatorios: ID, ID_Usuario"  -> Associação
+Usuario "1" -- "N" Relatorio : "Gera"
+
+' "Integracoes: ID, ID_Usuario" [cite: 123] -> Associação
+Usuario "1" -- "N" Integracao : "Gerencia"
+
+' Uma integração está ligada a uma conta específica
+Integracao "1" -- "1" Conta : "Sincroniza"
+
+' Dependências (Usa)
+' "Relatorios gerados de Transacoes" 
+Relatorio ..> Transacao : "Usa"
+' Um relatório também pode ser baseado em orçamentos
+Relatorio ..> Orcamento : "Usa"
+
+' Ligação com Enumerações
+Transacao -- TipoTransacao
+Relatorio -- TipoRelatorio
 @enduml
