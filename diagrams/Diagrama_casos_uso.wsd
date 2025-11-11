@@ -1,63 +1,55 @@
 @startuml
 left to right direction
 skinparam actorStyle awesome
-actor Usuario as a1
-actor Sistema as a2
-note "Nome completo, CPF, email, tipo de conta..." as N1
 
-/'UCS -> Sistema
-  UC -> Usuario'/
-package Aplicativo_de_gerenciamento_de_finanças {
+actor "Usuário" as a1
+actor "Sistema Bancário (API)" as a2
+
+package "Aplicativo de Gerenciamento de Finanças" {
     usecase "Cadastrar-se" as UC1
     usecase "Login" as UC2
-    usecase "Adicionar conta" as UC3
-    usecase "Conta poupança" as UC4
-    usecase "Conta corrente" as UC9
-    usecase "Preencher campos obrigatórios" as UC5
-    usecase "Recuperar senha" as UC6
-    usecase "Autenticação" as UCS1
+    usecase "Preencher campos obrigatórios" as UC3
+    usecase "Recuperar senha" as UC4
+    usecase "Autenticação" as UC5
+    usecase "Adicionar conta bancária" as UC6
     usecase "Cadastrar cartão de crédito" as UC7
-    usecase "Informações do cartão" as UC8
-    usecase "Alertas de vencimento" as UCS2
-    usecase "Gerar relatórios gráficos" as UCS3
-    usecase "Enviar mudança de senha para o email cadastrado" as UCS4
-    usecase "Registrar despesas" as UC11
-    usecase "Editar informações" as UC12
-    usecase "Consultas" as UC13
-    usecase "Consultar despesas" as UC14
-    usecase "Consultar receitas" as UC15
-    usecase "Registrar receitas" as UC16
-    usecase "Metas" as UC17
-    usecase "Definir metas mensais" as UC18
-    usecase "Buscar" as UC19
-    usecase "Excluir transação" as UC20
+    usecase "Registrar despesas e receitas" as UC8
+    usecase "Editar transações" as UC9
+    usecase "Excluir transação" as UC10
+    usecase "Consultar transações" as UC11
+    usecase "Definir metas mensais" as UC12
+    usecase "Gerar relatórios gráficos" as UC13
+    usecase "Receber alertas de vencimento" as UC14
+    usecase "Integração com bancos via API" as UC15
 }
 
+' Conexões com Usuário
 a1 - UC1
 a1 - UC2
-a1 - UC3
+a1 - UC4
 a1 - UC6
 a1 - UC7
+a1 - UC8
+a1 - UC9
+a1 - UC10
 a1 - UC11
+a1 - UC12
 a1 - UC13
-a1 - UC16
-a1 - UC18
-a1 - UC19
-a1 - UC20
+a1 - UC14
 
+' Conexão com sistema bancário
+a2 - UC15
 
+' Relações entre casos de uso
+UC1 ..> UC3 : <<include>>
+UC2 ..> UC5 : <<include>>
+UC4 ..> UC5 : <<include>>
+UC8 ..> UC9 : <<extend>>
+UC8 ..> UC10 : <<extend>>
+UC8 ..> UC11 : <<include>>
+UC11 ..> UC13 : <<extend>>
+UC12 ..> UC13 : <<extend>>
+UC12 ..> UC14 : <<extend>>
+UC15 ..> UC8 : <<include>>
 
-/'Interacoes'/
-UC1 ..> UC5:<<include>>
-UC2 ..> UCS1:<<include>>
-UC3 ..> UC4:<<include>>
-UC3 ..> UC9:<<include>>
-UC7 ..> UC8:<<include>>
-UC5 .. N1
-UC6 ..> UCS4: <<include>>
-UC11 ..> UC12:<<include>>
-UC13 ..>UC14:<<include>>
-UC13 ..>UC15:<<include>>
-UC13 ..>UC16:<<include>>
-UC17 ..>UC18:<<include>>
 @enduml
