@@ -1,2 +1,28 @@
 @startuml
+title: Diagrama de Atividade - Geração de Relatório
+start
+
+:Usuário solicita geração de relatório;
+:Seleciona tipo (ex: "Mensal") e período (ex: "Junho");
+
+partition Sistema {
+
+    if (Tipo de Relatório?) then (Mensal)
+        :Buscar transações do mês no BD\n(Tabela: Transacoes);
+        :Buscar orçamentos do mês no BD\n(Tabela: Orcamentos);
+    else (Anual)
+        :Buscar transações do ano no BD\n(Tabela: Transacoes);
+        :Buscar orçamentos do ano no BD\n(Tabela: Orcamentos);
+    endif
+
+    :Processar dados (agregar por categoria);
+    :Gerar JSON para gráfico\n(Conforme Tabela Relatorios);
+    
+    :Salvar relatório gerado no BD\n(Tabela: Relatorios);
+    
+} 
+
+:Exibir gráfico e dados na tela;
+
+stop
 @enduml

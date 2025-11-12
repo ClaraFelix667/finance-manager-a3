@@ -4,12 +4,10 @@ skinparam linetype ortho
 
 actor Usuario [
     **Usuário**
-    (Ator)
 ]
 
 actor Admin [
     **Admin**
-    (Ator)
 ]
 
 package "Aplicativo de Finanças" {
