@@ -71,39 +71,56 @@ package "Aplicativo de Finanças" {
         - Banco: string
         - UltimaSincronizacao: timestamp
     }
+
+    ' --- Novas Classes para a IA ---
+    class Chat {
+        - ID: int
+        - Titulo: string
+        - DataCriacao: datetime
+        + AdicionarMensagem()
+        + LimparHistorico()
+    }
+
+    class Mensagem {
+        - ID: int
+        - Conteudo: text
+        - DataEnvio: datetime
+    }
+
+    ' Classe de Serviço (Lógica da IA)
+    class "AssistenteFinanceiroIA" as IA <<Service>> {
+        + GerarResumoMensal(mes, ano): string
+        + ResponderUsuario(pergunta): string
+        + AnalisarGastos(listaTransacoes): string
+        + SugerirCategoria(descricao): string
+    }
 }
 
 ' --- Relacionamentos ---
 
-' Herança (Admin é um tipo de Usuário)
+' Herança
 Admin --|> Usuario
 
-' Associações (Composição e Agregação)
-' "Contas_Bancarias (array)" [cite: 119] -> Composição
+' Composições (Dono -> Parte)
 Usuario "1" *-- "N" Conta : "Possui"
-
-' "Transacoes N:1 com Usuarios"  -> Composição
 Usuario "1" *-- "N" Transacao : "Registra"
-
-' "Orcamentos N:1 com Usuarios"  -> Composição
 Usuario "1" *-- "N" Orcamento : "Define"
+Usuario "1" *-- "N" Chat : "Mantém"
+Chat "1" *-- "N" Mensagem : "Contém"
 
-' "Relatorios: ID, ID_Usuario"  -> Associação
+' Associações
 Usuario "1" -- "N" Relatorio : "Gera"
-
-' "Integracoes: ID, ID_Usuario" [cite: 123] -> Associação
 Usuario "1" -- "N" Integracao : "Gerencia"
-
-' Uma integração está ligada a uma conta específica
 Integracao "1" -- "1" Conta : "Sincroniza"
 
-' Dependências (Usa)
-' "Relatorios gerados de Transacoes" 
-Relatorio ..> Transacao : "Usa"
-' Um relatório também pode ser baseado em orçamentos
-Relatorio ..> Orcamento : "Usa"
+' Dependências (A IA precisa ler dados para funcionar)
+IA ..> Transacao : "Lê e Analisa"
+IA ..> Orcamento : "Verifica metas"
+IA ..> Mensagem : "Gera resposta"
 
-' Ligação com Enumerações
+' Ligações com Enums
 Transacao -- TipoTransacao
 Relatorio -- TipoRelatorio
+Mensagem -- Remetente
+
 @enduml

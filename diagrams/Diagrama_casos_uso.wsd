@@ -21,6 +21,8 @@ package "Aplicativo de Gerenciamento de Finanças" {
     usecase "Gerar relatórios gráficos" as UC13
     usecase "Receber alertas de vencimento" as UC14
     usecase "Integração com bancos via API" as UC15
+    usecase "Consultoria financeira via IA" as UC16
+    usecase "Obter mais informações" as UC17
 }
 
 ' Conexões com Usuário
@@ -36,6 +38,7 @@ a1 - UC11
 a1 - UC12
 a1 - UC13
 a1 - UC14
+a1 - UC16
 
 ' Conexão com sistema bancário
 a2 - UC15
@@ -51,5 +54,6 @@ UC11 ..> UC13 : <<extend>>
 UC12 ..> UC13 : <<extend>>
 UC12 ..> UC14 : <<extend>>
 UC15 ..> UC8 : <<include>>
+UC16 ..> UC17 : <<extend>>
 
 @enduml

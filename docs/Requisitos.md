@@ -47,6 +47,17 @@ O sistema deve oferecer funcionalidades avançadas de busca e filtro de transaç
 ### **RF010-Dashboard de Visão Geral**
 **M (Deve)**
 O sistema deve exibir uma tela inicial (Dashboard) com um resumo financeiro do mês atual, incluindo saldo total, despesas e receitas mensais, e status dos orçamentos mais críticos.
+
+### **RF-IA-01:**
+ O sistema deve utilizar Inteligência Artificial para analisar as transações de um mês selecionado e gerar um resumo textual explicando os principais gastos baseados na categoria e descrição.
+
+### **RF-IA-02:**
+ O sistema deve apresentar sugestões de ação rápida ("Quick Replies") abaixo do resumo, incluindo "Abrir Chat Detalhado" e "Obter mais informações (em relação ao resumo)".
+
+### **RF-IA-03:**
+ O sistema deve permitir que o usuário mantenha múltiplos históricos de conversas com a IA sobre diferentes tópicos financeiros.
+
+
 ## 2. Requisitos Não Funcionais
 **RNF01-Segurança**
 **M (Deve)**
@@ -72,4 +83,12 @@ O aplicativo deve ser acessível a diferentes perfis de usuários, incluindo op�
 **C (Poderia)**
 O aplicativo deve possuir um modo offline que o usuário consiga fazer o registro de transações mesmo sem conexão ativa
 armazenando os dados localmente e sincronizando-os automaticamente assim que a conexão for restabelecida, reduzindo o consumo de dados moveis e contribuindo para uma experiencia mais econômica e sustentável. 
+
+### **RNF-Desempenho:**
+**M (Must)**
+ O resumo da IA deve ser gerado em menos de 3 segundos para não travar o dashboard.
+
+## **RNF-Privacidade:**
+**M (Must)**
+ Os dados enviados para a API da IA devem ser anonimizados (não enviar o nome do usuário, apenas os valores e descrições das despesas).
 

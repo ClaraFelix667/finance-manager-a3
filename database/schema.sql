@@ -64,3 +64,22 @@ CREATE TABLE Integracoes (
     FOREIGN KEY (ID_Conta) REFERENCES Contas(ID) ON DELETE CASCADE
 );
 
+-- Tabela para gerenciar as sessões de conversa
+CREATE TABLE Chats (
+    ID INT PRIMARY KEY AUTO_INCREMENT,
+    ID_Usuario INT NOT NULL,
+    Titulo VARCHAR(100) DEFAULT 'Nova Conversa',
+    DataCriacao DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (ID_Usuario) REFERENCES Usuarios(ID) ON DELETE CASCADE
+);
+
+-- Tabela para as mensagens individuais dentro de um chat
+CREATE TABLE Mensagens (
+    ID INT PRIMARY KEY AUTO_INCREMENT,
+    ID_Chat INT NOT NULL,
+    Remetente ENUM('USUARIO', 'IA') NOT NULL, -- Quem mandou a mensagem?
+    Conteudo TEXT NOT NULL, -- O texto da conversa ou o resumo gerado
+    DataEnvio DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (ID_Chat) REFERENCES Chats(ID) ON DELETE CASCADE
+);
+

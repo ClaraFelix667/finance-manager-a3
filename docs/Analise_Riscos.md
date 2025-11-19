@@ -1,31 +1,55 @@
-# Analise de riscos
+# Análise de Riscos e Estratégias de Mitigação
 
-## 1 - Riscos de Segurança
-### Proteção de dados financeiros: 
-se a criptografia não for bem implementada, informações sensíveis podem ser expostas a ataques.
+Esta seção descreve os principais riscos identificados planejamos evitá-los ou resolvê-los.
 
-### Integração com bancos: 
-ao se conectar via API, há risco de ataques intermediários ou mau uso de credenciais de acesso.
+## Riscos de Segurança e Privacidade (LGPD)
 
-## 2 - Riscos de Desempenho
-### Sincronização em tempo real: 
-pode sobrecarregar os servidores, causando
-lentidão ou inconsistências nos dados.
+* **Risco: Proteção de dados financeiros.**
+  Se a criptografia não for bem feita, senhas e saldos podem vazar.
+  * **Solução:** Usaremos algoritmos fortes (como BCrypt) para as senhas e criptografia AES-256 para os dados sensíveis no banco de dados.
 
-### Modo offline: 
-quando vários dispositivos sincronizam ao mesmo tempo, podem ocorrer conflitos de informações.
+* **Risco: Integração com bancos (API).**
+  Ao conectar com o banco, hackers podem tentar interceptar a conexão.
+  * **Solução:** Usar conexão segura obrigatória (HTTPS) e guardar os tokens de acesso de forma criptografada na tabela de Integrações.
 
-### Escalabilidade: 
-se o número de usuários crescer rápido, o sistema pode perder estabilidade se não estiver preparado.
+* **Risco: Acesso não autorizado.**
+  Alguém pegar o celular desbloqueado e abrir o app.
+  * **Solução:** Exigir biometria (digital ou FaceID) para abrir o aplicativo e deslogar automaticamente após um tempo sem uso.
 
-## 3 - Riscos Funcionais
-### Categorização automática: 
-o algoritmo pode classificar transações de forma
-errada, distorcendo relatórios.
+## Riscos de Desempenho
 
-### Metas mensais: 
-sem alertas claros, o usuário pode ultrapassar limites sem perceber.
+* **Risco: Lentidão na sincronização.**
+  Se muita gente sincronizar ao mesmo tempo, o servidor pode travar.
+  * **Solução:** O app vai salvar os dados primeiro no celular (cache local) para ser rápido, e enviar para o servidor em segundo plano, sem travar a tela.
 
-### Alertas de vencimento: 
-falhas nas notificações podem levar a atrasos em
-pagamentos importantes.
+* **Risco: Conflitos no Modo Offline.**
+  O usuário altera algo sem internet e, quando volta, dá erro de sincronização.
+  * **Solução:** O sistema vai considerar sempre a alteração mais recente (baseada no horário/timestamp) como a correta.
+
+* **Risco: Escalabilidade.**
+  O sistema ficar lento se o número de usuários crescer muito rápido.
+  * **Solução:** O banco de dados foi desenhado seguindo regras de normalização (3NF) para ser eficiente, e usaremos índices nas buscas mais comuns.
+
+## Riscos Funcionais
+
+* **Risco: Categorização automática errada.**
+  O sistema classificar uma farmácia como "Restaurante", bagunçando o gráfico.
+  * **Solução:** O usuário poderá editar a categoria manualmente se o sistema errar, e o sistema "aprenderá" com essa correção para a próxima vez.
+
+* **Risco: Falha nos alertas.**
+  O usuário não receber o aviso e esquecer de pagar uma conta.
+  * **Solução:** Enviar alertas por dois caminhos: Notificação no celular (Push) e E-mail para contas marcadas como urgentes.
+
+## Riscos de Inteligência Artificial (IA)
+
+* **Risco: Alucinação da IA (Informação Falsa).**
+  A IA inventar gastos que não existem no resumo mensal.
+  * **Solução:** Vamos configurar a IA com instruções estritas ("System Prompts") para que ela analise **apenas** os dados JSON que enviarmos, sem inventar informações externas.
+
+* **Risco: Privacidade dos Dados.**
+  Enviar dados pessoais (como CPF ou Nome) para a empresa da IA (ex: OpenAI).
+  * **Solução:** Faremos uma "anonimização" antes de enviar: a IA só receberá a lista de valores, datas e categorias, sem o nome do usuário ou dados bancários reais.
+
+* **Risco: Demora na resposta.**
+  O chat demorar muito para carregar o resumo, frustrando o usuário.
+  * **Solução:** Mostrar uma animação de "digitando..." para o usuário saber que está processando, e salvar os resumos antigos no banco (cache) para não precisar gerar de novo se ele abrir a tela novamente.

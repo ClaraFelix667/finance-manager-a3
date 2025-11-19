@@ -1,2 +1,96 @@
 @startuml
+' Configurações visuais para parecer um diagrama de banco de dados (Pé de Galinha)
+!theme plain
+hide circle
+skinparam linetype ortho
+
+' Entidades (Tabelas)
+entity "Usuarios" as user {
+  *ID : INT <<PK>>
+  --
+  Nome : VARCHAR(255)
+  Email : VARCHAR(255)
+  Senha : VARCHAR(255)
+}
+
+entity "Contas" as conta {
+  *ID : INT <<PK>>
+  --
+  *ID_Usuario : INT <<FK>>
+  NomeInstituicao : VARCHAR(100)
+  Tipo : VARCHAR(50)
+  SaldoInicial : DECIMAL
+}
+
+entity "Transacoes" as trans {
+  *ID : INT <<PK>>
+  --
+  *ID_Usuario : INT <<FK>>
+  *ID_Conta : INT <<FK>>
+  Tipo : ENUM('RECEITA', 'DESPESA')
+  Valor : DECIMAL
+  Categoria : VARCHAR(100)
+  Data : DATE
+  Recorrente : BOOLEAN
+}
+
+entity "Orcamentos" as orc {
+  *ID : INT <<PK>>
+  --
+  *ID_Usuario : INT <<FK>>
+  Mes : DATE
+  Categoria : VARCHAR(100)
+  Limite : DECIMAL
+  Gasto_Atual : DECIMAL
+}
+
+entity "Relatorios" as rel {
+  *ID : INT <<PK>>
+  --
+  *ID_Usuario : INT <<FK>>
+  Tipo : ENUM('MENSAL', 'ANUAL')
+  DataGeracao : DATETIME
+  Dados : JSON
+}
+
+entity "Integracoes" as integ {
+  *ID : INT <<PK>>
+  --
+  *ID_Usuario : INT <<FK>>
+  *ID_Conta : INT <<FK>>
+  Banco : VARCHAR(100)
+  API_Token : VARCHAR(255)
+}
+
+entity "Chats" as chat {
+  *ID : INT <<PK>>
+  --
+  *ID_Usuario : INT <<FK>>
+  Titulo : VARCHAR(100)
+  DataCriacao : DATETIME
+}
+
+entity "Mensagens" as msg {
+  *ID : INT <<PK>>
+  --
+  *ID_Chat : INT <<FK>>
+  Remetente : ENUM('USUARIO', 'IA')
+  Conteudo : TEXT
+}
+
+' Relacionamentos
+' ||--o{ significa "Um para Muitos" (One to Many)
+
+user ||--o{ conta : "1 possui N"
+user ||--o{ trans : "1 registra N"
+user ||--o{ orc : "1 define N"
+user ||--o{ rel : "1 gera N"
+user ||--o{ integ : "1 configura N"
+user ||--o{ chat : "1 inicia N"
+
+conta ||--o{ trans : "movimenta"
+conta ||--o{ integ : "está vinculada a"
+
+chat ||--o{ msg : "contém"
+
 @enduml
