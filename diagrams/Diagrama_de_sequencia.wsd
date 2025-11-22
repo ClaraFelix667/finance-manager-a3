@@ -1,3 +1,23 @@
 @startuml
+actor Usuário
+boundary Aplicativo
+control ControladorCadastro
+entity BancoDeDados
 
+Usuário -> Aplicativo: Solicitar cadastro
+Aplicativo -> Usuário: Exibir formulário de cadastro
+Usuário -> Aplicativo: Preencher campos obrigatórios
+Aplicativo -> ControladorCadastro: Validar dados
+ControladorCadastro -> BancoDeDados: Verificar se usuário já existe
+BancoDeDados --> ControladorCadastro: Resultado da verificação
+
+alt Usuário não existe
+    ControladorCadastro -> BancoDeDados: Salvar novo usuário
+    BancoDeDados --> ControladorCadastro: Confirmação
+    ControladorCadastro -> Aplicativo: Cadastro concluído
+    Aplicativo -> Usuário: Exibir mensagem de sucesso
+else Usuário já existe
+    ControladorCadastro -> Aplicativo: Exibir erro "Usuário já cadastrado"
+    Aplicativo -> Usuário: Solicitar nova tentativa
+end
 @enduml
