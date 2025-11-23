@@ -9,13 +9,13 @@ control ModuloIntegracaoAPI as MI
 database BancoDeDados as BD
 actor "API do Banco Externo" as API_Banco
 
-== 1. Início e Autorização ==
+== Início e Autorização ==
 
 Usuário -> App: Solicitar Sincronização de Conta
 App -> Usuário: Solicitar credenciais/autorização (Token)
 Usuário -> App: Fornecer Credenciais/Token de Acesso
 
-== 2. Conexão e Segurança (RNF01) ==
+== Conexão e Segurança (RNF01) ==
 
 App -> MI: Enviar Token e Dados da Conta para Sincronização
 note right of MI
@@ -27,7 +27,7 @@ MI -> API_Banco: [Autenticação Segura] Solicitar Transações Recentes
 activate API_Banco
 API_Banco -> API_Banco: Validar Token e Acesso
 
-== 3. Importação de Dados ==
+== Importação de Dados ==
 
 API_Banco --> MI: Retornar Lista de Novas Transações
 deactivate API_Banco
@@ -47,7 +47,7 @@ loop Para cada Nova Transação Importada
     end
 end
 
-== 4. Finalização ==
+== Finalização ==
 
 BD --> MI: Confirmação de todas as transações salvas
 MI -> App: Retornar Status de Sincronização (Sucesso/Falha)
